@@ -72,6 +72,12 @@ module Workarea
         Workarea::Warnings.check
         Configuration::Session.validate!
       end
+
+      config.to_prepare do
+        # Fixes a constant error raised in middleware (when doing segmentation)
+        # No idea what the cause is. TODO revisit after Zeitwerk.
+        require_dependency 'workarea/metrics/user'
+      end
     end
   end
 end
